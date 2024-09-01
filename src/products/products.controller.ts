@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, Res } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    HttpStatus,
+    NotFoundException,
+    Param,
+    Post,
+    Put,
+    Query,
+    Res,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { ProductsService } from './products.service';
 
@@ -18,9 +31,9 @@ export class ProductsController {
 
     @Get('/:id')
     @HttpCode(HttpStatus.FOUND)
-    show(@Param('id') id: number): string {
+    show(@Param('id') id: number): object {
         console.log(typeof id); // string
-        return `Product ${id}`;
+        throw new NotFoundException('Not found product');
     }
 
     @Post('/')
