@@ -6,7 +6,7 @@ import {
     HttpCode,
     HttpStatus,
     NotFoundException,
-    Param,
+    Param, ParseIntPipe,
     Post,
     Put,
     Query,
@@ -31,7 +31,7 @@ export class ProductsController {
 
     @Get('/:id')
     @HttpCode(HttpStatus.FOUND)
-    show(@Param('id') id: number): object {
+    show(@Param('id', ParseIntPipe) id: number): object {
         console.log(typeof id); // string
         throw new NotFoundException('Not found product');
     }
