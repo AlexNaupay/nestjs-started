@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 @Controller('products')
 export class ProductsController {
@@ -9,12 +10,14 @@ export class ProductsController {
     }
 
     @Get('/:id')
+    @HttpCode(HttpStatus.FOUND)
     show(@Param('id') id: number): string {
         console.log(typeof id); // string
         return `Product ${id}`;
     }
 
     @Post('/')
+    @HttpCode(HttpStatus.CREATED)
     store(@Body() body: any): object {
         return {
             message: 'Added a new product',
@@ -31,9 +34,9 @@ export class ProductsController {
     }
 
     @Delete('/:id')
-    delete(@Param('id') id: number): object {
-        return {
+    delete(@Param('id') id: number, @Res() res: Response): object {
+        return res.status(HttpStatus.OK).send({
             message: `Delete a product: ${id}`,
-        };
+        });
     }
 }
