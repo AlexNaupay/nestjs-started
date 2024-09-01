@@ -1,12 +1,19 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
+    constructor(private readonly productsService: ProductsService) {}
+
     @Get('/')
-    get(@Query() query: any): string {
+    list(@Query() query: any): object {
         const { limit = 20, offset = 0 } = query;
-        return `Products Limit ${limit} Offset ${offset}`;
+        return {
+            limit,
+            offset,
+            data: this.productsService.findAll(),
+        };
     }
 
     @Get('/:id')
