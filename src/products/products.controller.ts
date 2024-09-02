@@ -6,7 +6,7 @@ import {
     HttpCode,
     HttpStatus,
     NotFoundException,
-    Param, ParseIntPipe,
+    Param,
     Post,
     Put,
     Query,
@@ -14,10 +14,12 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ProductsService } from './products.service';
+import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 
 @Controller('products')
 export class ProductsController {
-    constructor(private readonly productsService: ProductsService) {}
+    constructor(private readonly productsService: ProductsService) {
+    }
 
     @Get('/')
     list(@Query() query: any): object {
@@ -31,7 +33,7 @@ export class ProductsController {
 
     @Get('/:id')
     @HttpCode(HttpStatus.FOUND)
-    show(@Param('id', ParseIntPipe) id: number): object {
+    show(@Param('id', ParseIntegerIdPipe) id: number): object {
         console.log(typeof id); // string
         throw new NotFoundException('Not found product');
     }
