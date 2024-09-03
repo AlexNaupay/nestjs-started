@@ -15,11 +15,11 @@ import {
 import { Response } from 'express';
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
+import { CreateProductDto } from './products.dtos';
 
 @Controller('products')
 export class ProductsController {
-    constructor(private readonly productsService: ProductsService) {
-    }
+    constructor(private readonly productsService: ProductsService) {}
 
     @Get('/')
     list(@Query() query: any): object {
@@ -40,10 +40,10 @@ export class ProductsController {
 
     @Post('/')
     @HttpCode(HttpStatus.CREATED)
-    store(@Body() body: any): object {
+    store(@Body() data: CreateProductDto): object {
         return {
             message: 'Added a new product',
-            data: body,
+            data: data,
         };
     }
 
