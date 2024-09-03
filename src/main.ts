@@ -8,7 +8,8 @@ async function bootstrap() {
         new ValidationPipe({
             whitelist: true, // Ignorar datos que no estén en los DTO
             forbidNonWhitelisted: true, // Lanzar error si existen datos prohibidos
-            //disableErrorMessages: true, // Deshabilitar detalles de mensajes de error (producción)
+            // Deshabilitar detalles de mensajes de error (producción)
+            disableErrorMessages: process.env.ENVIRONMENT == 'production',
         }),
     );
     await app.listen(3000);
