@@ -15,7 +15,7 @@ import {
 import { Response } from 'express';
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
-import { CreateProductDto } from './products.dtos';
+import { CreateProductDto, UpdateProductDto } from './products.dtos';
 
 @Controller('products')
 export class ProductsController {
@@ -48,7 +48,7 @@ export class ProductsController {
     }
 
     @Put('/:id')
-    update(@Param('id') id: number, @Body() body: any): object {
+    update(@Param('id', ParseIntegerIdPipe) id: number, @Body() body: UpdateProductDto): object {
         return {
             message: `Update a product: ${id}`,
             data: body,

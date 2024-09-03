@@ -15,7 +15,6 @@ export class CreateProductDto {
     @IsPositive()
     readonly price: number;
 
-    @IsNumber()
     @IsNotEmpty()
     @IsPositive()
     readonly stock: number;
@@ -25,4 +24,5 @@ export class CreateProductDto {
     readonly image: string;
 }
 
+// Add optional to all properties
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
