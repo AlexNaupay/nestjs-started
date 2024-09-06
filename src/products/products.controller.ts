@@ -16,13 +16,18 @@ import { Response } from 'express';
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dtos';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('products')
 export class ProductsController {
-    constructor(private readonly productsService: ProductsService) {}
+    constructor(
+        private readonly productsService: ProductsService,
+        private readonly configService: ConfigService,
+    ) {}
 
     @Get('/')
     list(@Query() query: any): object {
+        console.log(this.configService.get('database.user'));
         const { limit = 20, offset = 0 } = query;
         return {
             limit,
