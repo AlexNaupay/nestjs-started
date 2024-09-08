@@ -23,9 +23,11 @@ client.query('SELECT * FROM tasks', (err, res) => {
     console.log(res.rows);
 });
 
+const API_KEY_X = 'key_value_for_x';
+
 @Module({
     imports: [ProductsModule, ConfigModule.forRoot({ load: [configuration], isGlobal: true })],
     controllers: [AppController, CategoriesController],
-    providers: [AppService],
+    providers: [AppService, { provide: 'API_KEY_X', useValue: API_KEY_X }],
 })
 export class AppModule {}
