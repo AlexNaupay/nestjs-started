@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CategoriesController } from './categories/categories.controller';
 import { ProductsModule } from './products/products.module';
+import { DatabaseModule } from './common/database.module';
 import configuration from '../config/configuration';
 
 const client = new Client({
@@ -26,20 +27,8 @@ client.query('SELECT * FROM tasks', (err, res) => {
 const API_KEY_X = 'key_value_for_x';
 
 @Module({
-    imports: [ProductsModule, ConfigModule.forRoot({ load: [configuration], isGlobal: true })],
+    imports: [ProductsModule, ConfigModule.forRoot({ load: [configuration], isGlobal: true }), DatabaseModule],
     controllers: [AppController, CategoriesController],
-    providers: [
-        AppService,
-        { provide: 'API_KEY_X', useValue: API_KEY_X },
-        {
-            provide: 'TASKS',
-            useFactory: async (http: HttpService) => {
-                // 👈 implement useFactory
-                const tasks = await http.get('https://jsonplaceholder.typicode.com/todos').toPromise();
-                return tasks.data;
-            },
-            inject: [HttpService],
-        },
-    ],
+    providers: [AppService, { provide: 'API_KEY_X', useValue: API_KEY_X }],
 })
 export class AppModule {}
