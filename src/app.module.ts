@@ -8,6 +8,8 @@ import { CategoriesController } from './categories/categories.controller';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './common/database.module';
 import configuration from '../config/configuration';
+import { environments } from './environments';
+import * as process from 'node:process';
 
 const client = new Client({
     user: 'root',
@@ -27,7 +29,15 @@ client.query('SELECT * FROM tasks', (err, res) => {
 const API_KEY_X = 'key_value_for_x';
 
 @Module({
-    imports: [ProductsModule, ConfigModule.forRoot({ load: [configuration], isGlobal: true }), DatabaseModule],
+    imports: [
+        ProductsModule,
+        ConfigModule.forRoot({
+            envFilePath: environments[process.env.NODE_ENV] || '.env',
+            load: [configuration],
+            isGlobal: true,
+        }),
+        DatabaseModule,
+    ],
     controllers: [AppController, CategoriesController],
     providers: [AppService, { provide: 'API_KEY_X', useValue: API_KEY_X }],
 })
