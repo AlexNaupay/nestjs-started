@@ -1,41 +1,33 @@
+import * as process from 'node:process';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { Client } from 'pg';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CategoriesController } from './categories/categories.controller';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './common/database.module';
-import configuration from '../config/configuration';
+import configuration from './config/configuration';
 import { environments } from './environments';
-import * as process from 'node:process';
-
-const client = new Client({
-    user: 'root',
-    password: '123456',
-    host: '127.0.0.1',
-    port: 5432,
-    database: 'store_db',
-});
-
-client.connect();
-
-client.query('SELECT * FROM tasks', (err, res) => {
-    console.log(err);
-    console.log(res.rows);
-});
+import { validate } from './config/env.validation';
 
 const API_KEY_X = 'key_value_for_x';
 
 @Module({
     imports: [
-        ProductsModule,
+        // config configuration
         ConfigModule.forRoot({
             envFilePath: environments[process.env.NODE_ENV] || '.env',
             load: [configuration],
+            validate: validate,
             isGlobal: true,
+            expandVariables: true,
+            validationOptions: {
+                allowUnknown: false,
+                abortEarly: true,
+            },
         }),
+        ProductsModule,
         DatabaseModule,
     ],
     controllers: [AppController, CategoriesController],
