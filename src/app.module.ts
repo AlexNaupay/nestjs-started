@@ -28,6 +28,18 @@ const API_KEY_X = 'key_value_for_x';
 @Module({
     imports: [ProductsModule, ConfigModule.forRoot({ load: [configuration], isGlobal: true })],
     controllers: [AppController, CategoriesController],
-    providers: [AppService, { provide: 'API_KEY_X', useValue: API_KEY_X }],
+    providers: [
+        AppService,
+        { provide: 'API_KEY_X', useValue: API_KEY_X },
+        {
+            provide: 'TASKS',
+            useFactory: async (http: HttpService) => {
+                // 👈 implement useFactory
+                const tasks = await http.get('https://jsonplaceholder.typicode.com/todos').toPromise();
+                return tasks.data;
+            },
+            inject: [HttpService],
+        },
+    ],
 })
 export class AppModule {}
