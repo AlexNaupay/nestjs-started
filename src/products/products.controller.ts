@@ -13,11 +13,15 @@ import {
     Res,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { DateTime, Settings } from 'luxon';
+import { ConfigService } from '@nestjs/config';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
-import { ConfigService } from '@nestjs/config';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+Settings.defaultZone = 'America/Lima';
 
 @ApiTags('Products')
 @Controller('products')
@@ -50,7 +54,11 @@ export class ProductsController {
             throw new NotFoundException('Not found product');
         }
 
-        return product;
+        return {
+            ...product,
+            created_at: DateTime.fromISO(product.created_at.toISOString()),
+            updated_at: DateTime.fromISO(product.updated_at.toISOString()),
+        };
     }
 
     @Post('/')
