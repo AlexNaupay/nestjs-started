@@ -18,8 +18,8 @@ export class ProductsService {
 
     async update(id: number, data: UpdateProductDto): Promise<Product> {
         const product = await this.productsRepository.findOneBy({ id });
-
-        const updatedProduct = Object.assign(product, data);
+        //const updatedProduct = Object.assign(product, data);
+        const updatedProduct = this.productsRepository.merge(product, data);
         return this.productsRepository.save(updatedProduct); // Save on database
     }
 
