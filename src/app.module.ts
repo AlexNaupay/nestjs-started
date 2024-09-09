@@ -34,3 +34,5 @@ const API_KEY_X = 'key_value_for_x';
     providers: [AppService, { provide: 'API_KEY_X', useValue: API_KEY_X }],
 })
 export class AppModule {}
+// yarn  --save-dev @types/joi
+// "esModuleInterop": true in tsconfig

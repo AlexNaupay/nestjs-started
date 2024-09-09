@@ -1,7 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -14,6 +16,15 @@ async function bootstrap() {
         }),
     );
     const configService = app.get(ConfigService);
+
+    const config = new DocumentBuilder()
+        .setTitle('Store API')
+        .setDescription('The store API description')
+        .setVersion('1.0')
+        .addTag('store')
+        .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('docs', app, document);
 
     await app.listen(configService.get('PORT'));
 }

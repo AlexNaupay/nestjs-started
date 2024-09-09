@@ -15,7 +15,7 @@ import {
 import { Response } from 'express';
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
-import { CreateProductDto, UpdateProductDto } from './products.dtos';
+import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Controller('products')
