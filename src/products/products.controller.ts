@@ -29,21 +29,32 @@ export class ProductsController {
 
     @Get('/')
     @ApiOperation({ summary: 'List of products' })
-    list(@Query() query: any): object {
+    async list(@Query() query: any) {
         console.log(this.configService.get('database.user'));
         const { limit = 20, offset = 0 } = query;
+
+        const all = await this.productsService.findAll();
+        console.log(typeof all);
+        console.log(all);
+
         return {
             limit,
             offset,
-            data: this.productsService.findAll(),
+            data: all,
         };
     }
 
     @Get('/:id')
     @HttpCode(HttpStatus.FOUND)
-    show(@Param('id', ParseIntegerIdPipe) id: number): object {
+    async show(@Param('id', ParseIntegerIdPipe) id: number) {
         console.log(typeof id); // string
-        throw new NotFoundException('Not found product');
+        const product = await this.productsService.findOne(id);
+
+        if (!product) {
+            throw new NotFoundException('Not found product');
+        }
+
+        return product;
     }
 
     @Post('/')

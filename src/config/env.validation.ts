@@ -49,7 +49,7 @@ class EnvironmentVariables {
     @IsAlphanumeric()
     DATABASE_PASSWORD: string;
 
-    @IsAlphanumeric()
+    @IsString()
     DATABASE_NAME: string;
 }
 
