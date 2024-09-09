@@ -20,10 +20,13 @@ export class Product {
     @Column({ type: 'varchar', length: 255 })
     image: string;
 
-    @CreateDateColumn()
+    @CreateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
     created_at: Date;
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({ type: 'timestamptz' })
     updated_at: Date;
 
     @DeleteDateColumn({ nullable: true })

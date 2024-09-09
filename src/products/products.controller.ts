@@ -41,7 +41,7 @@ export class ProductsController {
     }
 
     @Get('/:id')
-    @HttpCode(HttpStatus.FOUND)
+    @HttpCode(HttpStatus.OK)
     async show(@Param('id', ParseIntegerIdPipe) id: number) {
         console.log(typeof id); // string
         const product = await this.productsService.findOne(id);
