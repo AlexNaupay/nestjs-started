@@ -64,11 +64,8 @@ export class ProductsController {
     }
 
     @Put('/:id')
-    update(@Param('id', ParseIntegerIdPipe) id: number, @Body() body: UpdateProductDto): object {
-        return {
-            message: `Update a product: ${id}`,
-            data: body,
-        };
+    update(@Param('id', ParseIntegerIdPipe) id: number, @Body() data: UpdateProductDto) {
+        return this.productsService.update(id, data);
     }
 
     @Delete('/:id')
