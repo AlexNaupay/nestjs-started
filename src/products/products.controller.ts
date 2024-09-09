@@ -33,14 +33,10 @@ export class ProductsController {
         console.log(this.configService.get('database.user'));
         const { limit = 20, offset = 0 } = query;
 
-        const all = await this.productsService.findAll();
-        console.log(typeof all);
-        console.log(all);
-
         return {
             limit,
             offset,
-            data: all,
+            data: await this.productsService.findAll(),
         };
     }
 
@@ -59,10 +55,11 @@ export class ProductsController {
 
     @Post('/')
     @HttpCode(HttpStatus.CREATED)
-    store(@Body() data: CreateProductDto): object {
+    async store(@Body() data: CreateProductDto) {
+        const newProduct = await this.productsService.store(data);
         return {
             message: 'Added a new product',
-            data: data,
+            data: newProduct,
         };
     }
 
