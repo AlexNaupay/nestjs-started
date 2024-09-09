@@ -29,6 +29,6 @@ export class Product {
     @UpdateDateColumn({ type: 'timestamptz' })
     updated_at: Date;
 
-    @DeleteDateColumn({ nullable: true })
+    @DeleteDateColumn({ type: 'timestamptz', nullable: true })
     deleted_at: Date;
 }
