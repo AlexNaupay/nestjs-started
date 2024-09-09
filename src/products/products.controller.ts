@@ -17,7 +17,9 @@ import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { ConfigService } from '@nestjs/config';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
     constructor(
@@ -26,6 +28,7 @@ export class ProductsController {
     ) {}
 
     @Get('/')
+    @ApiOperation({ summary: 'List of products' })
     list(@Query() query: any): object {
         console.log(this.configService.get('database.user'));
         const { limit = 20, offset = 0 } = query;
