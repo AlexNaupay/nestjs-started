@@ -1,12 +1,11 @@
 import { plainToInstance, Transform } from 'class-transformer';
 import {
-    IsAlpha,
     IsAlphanumeric,
-    IsEnum, IsFQDN,
-    IsIP,
+    IsEnum,
     IsNotEmpty,
     IsNumber,
-    IsOptional, IsString,
+    IsOptional,
+    IsString,
     Max,
     Min,
     validateSync,
