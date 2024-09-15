@@ -30,6 +30,9 @@ export class Product {
     @Column({ type: 'varchar', length: 255 })
     image: string;
 
+    @Column({ type: 'integer', nullable: true })
+    brand_id: number;
+
     @ManyToOne(() => Brand, (brand) => brand.products, { nullable: true })
     @JoinColumn({ name: 'brand_id' }) // Which table has the property
     brand: Brand;

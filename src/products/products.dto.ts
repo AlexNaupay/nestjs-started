@@ -24,6 +24,11 @@ export class CreateProductDto {
     @IsUrl()
     @IsNotEmpty()
     readonly image: string;
+
+    @IsNotEmpty()
+    @IsInt()
+    @Min(0)
+    readonly brand_id: number;
 }
 
 // Add optional to all properties
