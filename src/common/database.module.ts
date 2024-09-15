@@ -18,6 +18,7 @@ import { Brand } from '../brands/entities/brand.entity';
                 database: configService.get('database.name'),
                 entities: [Product, Brand],
                 synchronize: true,
+                autoLoadEntities: true,
             }),
             inject: [ConfigService],
         }),

@@ -28,10 +28,10 @@ export class ProductsService {
     }
 
     findAll(): Promise<Product[]> {
-        return this.productsRepository.find();
+        return this.productsRepository.find({ relations: ['brand'] });
     }
 
     findOne(id: number): Promise<Product> {
-        return this.productsRepository.findOneBy({ id });
+        return this.productsRepository.findOne({ where: { id: id }, relations: ['brand'] });
     }
 }
