@@ -4,12 +4,12 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CategoriesController } from './categories/categories.controller';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './common/database.module';
 import configuration from './config/configuration';
 import { environments } from './environments';
 import { validate } from './config/env.validation';
+import { BrandsModule } from './brands/brands.module';
 
 const API_KEY_X = 'key_value_for_x';
 
@@ -29,8 +29,9 @@ const API_KEY_X = 'key_value_for_x';
         }),
         ProductsModule,
         DatabaseModule,
+        BrandsModule,
     ],
-    controllers: [AppController, CategoriesController],
+    controllers: [AppController],
     providers: [AppService, { provide: 'API_KEY_X', useValue: API_KEY_X }],
 })
 export class AppModule {}

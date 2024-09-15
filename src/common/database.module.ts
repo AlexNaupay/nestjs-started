@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Product } from '../products/product.entity';
+import { Brand } from '../brands/entities/brand.entity';
 
 @Global()
 @Module({
@@ -15,7 +16,7 @@ import { Product } from '../products/product.entity';
                 username: configService.get('database.user'),
                 password: configService.get('database.password'),
                 database: configService.get('database.name'),
-                entities: [Product],
+                entities: [Product, Brand],
                 synchronize: true,
             }),
             inject: [ConfigService],
