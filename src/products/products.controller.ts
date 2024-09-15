@@ -10,6 +10,7 @@ import {
     Post,
     Put,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -17,7 +18,9 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
+import { ApiKeyGuard } from '../auth/api-key.guard';
 
+@UseGuards(ApiKeyGuard)
 @ApiTags('Products')
 @Controller('products')
 export class ProductsController {
