@@ -70,9 +70,17 @@ export class ProductsController {
     }
 
     @Delete('/:id')
-    delete(@Param('id') id: number, @Res() res: Response): object {
-        return res.status(HttpStatus.OK).send({
-            message: `Delete a product: ${id}`,
-        });
+    async delete(@Param('id', ParseIntegerIdPipe) id: number) {
+        const product = await this.productsService.findOne(id);
+        if (!product) {
+            throw new NotFoundException('Not found product');
+        }
+
+        const result = await this.productsService.delete(id);
+
+        return {
+            message: 'Product deleted',
+            data: result.affected,
+        };
     }
 }
