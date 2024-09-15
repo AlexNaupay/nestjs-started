@@ -7,4 +7,5 @@ export default () => ({
         password: process.env.DATABASE_PASSWORD,
         name: process.env.DATABASE_NAME,
     },
+    api_key: process.env.API_KEY,
 });
