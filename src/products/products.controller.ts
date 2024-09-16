@@ -10,6 +10,7 @@ import {
     Post,
     Put,
     Query,
+    SetMetadata,
     UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -31,6 +32,7 @@ export class ProductsController {
 
     @Get('/')
     @ApiOperation({ summary: 'List of products' })
+    @SetMetadata('isPublic', true)
     async list(@Query() query: any) {
         console.log(this.configService.get('database.user'));
         const { limit = 20, offset = 0 } = query;
