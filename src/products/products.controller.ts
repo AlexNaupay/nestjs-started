@@ -10,7 +10,6 @@ import {
     Post,
     Put,
     Query,
-    SetMetadata,
     UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -20,6 +19,7 @@ import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { ApiKeyGuard } from '../auth/api-key.guard';
+import { Public } from '../auth/public.decorator';
 
 @UseGuards(ApiKeyGuard)
 @ApiTags('Products')
@@ -32,7 +32,7 @@ export class ProductsController {
 
     @Get('/')
     @ApiOperation({ summary: 'List of products' })
-    @SetMetadata('isPublic', true)
+    @Public()
     async list(@Query() query: any) {
         console.log(this.configService.get('database.user'));
         const { limit = 20, offset = 0 } = query;
