@@ -11,6 +11,7 @@ import { environments } from './environments';
 import { validate } from './config/env.validation';
 import { BrandsModule } from './brands/brands.module';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 const API_KEY_X = 'key_value_for_x';
 
@@ -32,6 +33,7 @@ const API_KEY_X = 'key_value_for_x';
         DatabaseModule,
         BrandsModule,
         AuthModule,
+        UsersModule,
     ],
     controllers: [AppController],
     providers: [AppService, { provide: 'API_KEY_X', useValue: API_KEY_X }],

@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Product } from '../products/product.entity';
 import { Brand } from '../brands/entities/brand.entity';
+import { User } from '../users/entities/user.entity';
 
 @Global()
 @Module({
@@ -16,7 +17,7 @@ import { Brand } from '../brands/entities/brand.entity';
                 username: configService.get('database.user'),
                 password: configService.get('database.password'),
                 database: configService.get('database.name'),
-                entities: [Product, Brand],
+                entities: [Product, Brand, User],
                 synchronize: true,
                 autoLoadEntities: true,
             }),
