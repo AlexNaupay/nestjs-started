@@ -13,7 +13,7 @@ export class AppController {
         return this.appService.getHello();
     }
 
-    @Get('/users/:id')
+    @Get('/users-app/:id')
     showUser(@Param() params: any): string {
         console.log(this.apiKey);
         return `User ${params.id}`;

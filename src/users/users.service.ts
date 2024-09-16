@@ -3,6 +3,7 @@ import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -11,18 +12,15 @@ export class UsersService {
         private usersRepository: Repository<User>,
     ) {}
 
-    create(createUserDto: CreateUserDto) {
+    async create(createUserDto: CreateUserDto) {
         const newUser = this.usersRepository.create(createUserDto);
-        // const hashPassword = await bcrypt.hash(newUser.password, 10);
-        // newUser.password = hashPassword;
+        newUser.password = await hash(newUser.password, 10);
 
         return this.usersRepository.save(newUser);
     }
 
     findAll() {
-        return this.usersRepository.find({
-            relations: ['customer'],
-        });
+        return this.usersRepository.find();
     }
 
     findOne(id: number) {
@@ -36,6 +34,12 @@ export class UsersService {
     async update(id: number, updateUserDto: UpdateUserDto) {
         const user = await this.findOne(id);
         this.usersRepository.merge(user, updateUserDto);
+
+        if (updateUserDto.password) {
+            const password = await hash(updateUserDto.password, 10);
+            this.usersRepository.merge(user, { password });
+        }
+
         return this.usersRepository.save(user);
     }
 
