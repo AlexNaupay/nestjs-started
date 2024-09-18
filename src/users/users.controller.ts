@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 
-@Controller('users')
+@Controller('/users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
@@ -16,17 +17,22 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @Get(':id')
-    findOne(@Param('id') id: number) {
-        return this.usersService.findOne(id);
+    @Get('/:id')
+    async findOne(@Param('id') id: number) {
+        const user = await this.usersService.findOne(id);
+        if (!user) {
+            throw new NotFoundException(`User not found: ${id}`);
+        }
+
+        return user;
     }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    @Patch('/:id')
+    update(@Param('id', ParseIntegerIdPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
         return this.usersService.update(+id, updateUserDto);
     }
 
-    @Delete(':id')
+    @Delete('/:id')
     remove(@Param('id') id: string) {
         return this.usersService.remove(+id);
     }
