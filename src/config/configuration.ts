@@ -8,4 +8,5 @@ export default () => ({
         name: process.env.DATABASE_NAME,
     },
     api_key: process.env.API_KEY,
+    app_key: process.env.APP_KEY,
 });
