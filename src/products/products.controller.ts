@@ -18,8 +18,8 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
-import { ApiKeyGuard } from '../auth/api-key.guard';
-import { Public } from '../auth/public.decorator';
+import { ApiKeyGuard } from '../auth/common/api-key.guard';
+import { Public } from '../auth/common/public.decorator';
 
 @UseGuards(ApiKeyGuard)
 @ApiTags('Products')
