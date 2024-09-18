@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,6 +13,11 @@ export class UsersService {
     ) {}
 
     async create(createUserDto: CreateUserDto) {
+        const user = await this.findOneByEmail(createUserDto.email);
+        if (user) {
+            throw new BadRequestException(`User already exists: ${user.email}`);
+        }
+
         const newUser = this.usersRepository.create(createUserDto);
         newUser.password = await hash(newUser.password, 10);
 
