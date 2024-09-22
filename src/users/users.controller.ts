@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
+import { AuthJwtGuard } from '../auth/common/auth-jwt.guard';
 
 @Controller('/users')
 export class UsersController {
@@ -13,6 +14,7 @@ export class UsersController {
     }
 
     @Get()
+    @UseGuards(AuthJwtGuard)
     findAll() {
         return this.usersService.findAll();
     }
