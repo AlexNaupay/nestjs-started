@@ -6,6 +6,8 @@ import { IS_PUBLIC_KEY } from './public.decorator';
 
 @Injectable()
 export class AuthJwtGuard implements CanActivate {
+    private readonly logger = new Logger(AuthJwtGuard.name);
+
     constructor(
         private readonly configService: ConfigService,
         private readonly reflector: Reflector,
@@ -13,8 +15,6 @@ export class AuthJwtGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const logger = new Logger(AuthJwtGuard.name);
-
         const isPublic = this.reflector.get(IS_PUBLIC_KEY, context.getHandler()); // Get from @Public decorator
         if (isPublic) {
             return true;
@@ -34,7 +34,7 @@ export class AuthJwtGuard implements CanActivate {
             // so that we can access it in our route handlers
             request['user'] = payload;
         } catch (error) {
-            logger.error(error);
+            this.logger.error(error);
             throw new UnauthorizedException();
         }
         return true;
