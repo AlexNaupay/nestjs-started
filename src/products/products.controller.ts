@@ -18,10 +18,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
-import { ApiKeyGuard } from '../auth/common/api-key.guard';
 import { Public } from '../auth/common/public.decorator';
+import { AuthJwtGuard } from '../auth/common/auth-jwt.guard';
 
-@UseGuards(ApiKeyGuard)
+@UseGuards(AuthJwtGuard)
 @ApiTags('Products')
 @Controller('products')
 export class ProductsController {

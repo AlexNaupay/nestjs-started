@@ -16,7 +16,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
                     global: true,
                     secret: configService.get('app_key'),
                     signOptions: {
-                        expiresIn: '3h',
+                        expiresIn: '1h',
                     },
                 };
             },
