@@ -19,9 +19,11 @@ import { ProductsService } from './products.service';
 import { ParseIntegerIdPipe } from '../common/parse-integer-id.pipe';
 import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { Public } from '../auth/common/public.decorator';
-import { AuthJwtGuard } from '../auth/common/auth-jwt.guard';
+// import { AuthJwtGuard } from '../auth/common/auth-jwt.guard';
+import { AuthJwtCookieGuard } from '../auth/common/auth-jwt-cookie.guard';
 
-@UseGuards(AuthJwtGuard)
+// @UseGuards(AuthJwtGuard)
+@UseGuards(AuthJwtCookieGuard)
 @ApiTags('Products')
 @Controller('products')
 export class ProductsController {

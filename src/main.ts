@@ -2,6 +2,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
 
@@ -28,6 +29,7 @@ async function bootstrap() {
 
     // app.enableCors();
     app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+    app.use(cookieParser());
 
     await app.listen(configService.get('PORT'));
 }
