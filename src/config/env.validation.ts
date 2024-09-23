@@ -54,6 +54,14 @@ class EnvironmentVariables {
     @IsString()
     @IsNotEmpty()
     API_KEY: string;
+
+    @IsString()
+    @IsNotEmpty()
+    ACCESS_TOKEN_KEY: string;
+
+    @IsString()
+    @IsNotEmpty()
+    REFRESH_TOKEN_KEY: string;
 }
 
 export function validate(config: Record<string, unknown>) {

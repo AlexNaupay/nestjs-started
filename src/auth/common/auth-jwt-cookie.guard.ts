@@ -31,7 +31,7 @@ export class AuthJwtCookieGuard implements CanActivate {
             // 💡 We're assigning the payload to the request object here
             // so that we can access it in our route handlers
             request['user'] = await this.jwtService.verifyAsync(token, {
-                secret: this.configService.get('app_key'),
+                secret: this.configService.get('access_token_key'),
             });
         } catch (error) {
             this.logger.error(error);

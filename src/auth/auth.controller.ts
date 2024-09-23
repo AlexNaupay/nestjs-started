@@ -18,9 +18,17 @@ export class AuthController {
             httpOnly: true,
             secure: false,
             sameSite: 'strict',
-            maxAge: 60 * 60 * 1000,
+            maxAge: 60 * 60 * 1000, // 1h
         });
 
-        return login;
+        response.cookie(this.configService.get('cookie_refresh_key'), login.refresh_token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: 21600 * 60 * 1000, // 15d
+            path: '/auth/refresh',
+        });
+
+        return true;
     }
 }
