@@ -1,9 +1,11 @@
 import { IsString, IsNumber, IsUrl, IsNotEmpty, IsPositive, Min, IsInt } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { IsCapitalized } from '../validators';
 
 export class CreateProductDto {
     @IsString()
     @IsNotEmpty()
+    @IsCapitalized()
     readonly name: string;
 
     @IsString()

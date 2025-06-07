@@ -42,10 +42,10 @@ class EnvironmentVariables {
     @Transform(({ value }) => parseInt(value, 10))
     DATABASE_PORT: number;
 
-    @IsAlphanumeric()
+    @IsString()
     DATABASE_USER: string;
 
-    @IsAlphanumeric()
+    @IsString()
     DATABASE_PASSWORD: string;
 
     @IsString()
