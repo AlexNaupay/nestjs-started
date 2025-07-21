@@ -15,6 +15,10 @@ export class AuthService {
     async signIn(username: string, pass: string): Promise<{ access_token: string; refresh_token: string }> {
         const user = await this.usersService.findOneByEmail(username);
 
+        if (!user) {
+            throw new UnauthorizedException('User or password are incorrect');
+        }
+
         const comparison = await compare(pass, user.password);
 
         if (user.password === undefined || comparison === false) {
