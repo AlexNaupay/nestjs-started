@@ -1,5 +1,7 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Inject, Param } from '@nestjs/common';
 import { AppService } from './app.service';
+
+let counter = 1;
 
 @Controller()
 export class AppController {
@@ -10,7 +12,9 @@ export class AppController {
 
     @Get()
     getHello(): string {
+        console.log(`Request ... ${counter++}`);
         return this.appService.getHello();
+        //throw new HttpException('Forbidden', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Get('/users-app/:id')
